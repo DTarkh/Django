@@ -5,7 +5,14 @@
 
 
 <div class="container mt-5">
+     <a class="btn btn-primary"  href={% url 'bookshop:add_book' %}>Add new product </a>
     <div class="row">
+        <div class="col">
+            {% include 'sort.html' %}
+        </div>
+
+
+
 {% for book in books %}
 
 <div class="card m-2" style="width: 18rem;">
@@ -22,6 +29,10 @@
 </div>
 
 {% endfor %}
+
+
+
+
 
 {% endblock %}
 </div>

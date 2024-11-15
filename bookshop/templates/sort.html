@@ -1,0 +1,12 @@
+<form method="get">
+    {% for genre, categories in book_by_genres.items %}
+        <div class="form-group">
+            <h3>{{ genre }}</h3>
+            {% for category in categories %}
+                <input class="form-check-input" type="checkbox" name="category" value="{{ category.id }}">
+                <label>{{ category.name }}</label><br>
+            {% endfor %}
+        </div>
+    {% endfor %}
+    <button class="btn btn-secondary" type="submit">Sort</button>
+</form>
