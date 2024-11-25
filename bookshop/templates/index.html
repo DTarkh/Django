@@ -6,6 +6,7 @@
 
 <div class="container mt-5">
      <a class="btn btn-primary"  href={% url 'bookshop:add_book' %}>Add new product </a>
+    {% include 'paginator.html' %}
     <div class="row">
         <div class="col">
             {% include 'sort.html' %}
@@ -23,6 +24,7 @@
       <h5 class="card-title"><span class="badge bg-success">{{book.category.all|join:", "}}</span></h5>
     <p class="card-text">Description: {{book.description | truncatewords:12 }}</p>
       <p class="card-text">price: {{book.price}}$</p>
+      <a href="{% url 'bookshop:book_detail' book.id %}"  class="btn btn-success">details</a>
 
 
   </div>
@@ -32,7 +34,7 @@
 
 
 
-
+ {% include 'paginator.html' %}
 
 {% endblock %}
 </div>

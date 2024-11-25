@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from .models import Book, Category
 from .forms import BookForm
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 
 
@@ -15,6 +16,19 @@ def index(request):
         books = Book.objects.filter(category__in=category)
     else:
         books = Book.objects.all()
+
+
+
+    paginator = Paginator(books, 3)
+    try:
+
+        page_number = request.GET.get('page')
+
+        books = paginator.get_page(page_number)
+    except PageNotAnInteger:
+        books = paginator.page(1)
+    except EmptyPage:
+        books = paginator.page(paginator.num_pages)
 
 
 
@@ -32,6 +46,16 @@ def index(request):
     print(book_by_genres)
 
     return render(request, 'index.html', {'books': books, 'book_by_genres': book_by_genres})
+
+
+
+
+def detail(request, pk):
+    book = Book.objects.get(pk=pk)
+
+    related_books = Book.objects.filter(category__in=book.category.all()).exclude(id=book.id)
+    return render(request, 'detail.html', {'book': book, 'related_books': related_books})
+
 
 def add_book(request):
     if request.method == 'POST':

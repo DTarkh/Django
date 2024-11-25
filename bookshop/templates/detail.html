@@ -1,0 +1,36 @@
+{%  extends 'base.html' %}
+
+
+{% block content %}
+
+
+<div>
+    <h1>{{book.title}}</h1>
+    <h4>{{book.author}}</h4>
+    <h4>{{book.price}}</h4>
+    <p>{{book.description}}</p>
+</div>
+
+
+
+{% if related_books %}
+
+{% for related_book in related_books %}
+
+ <div class="card m-2" style="width: 18rem;">
+  <img src="https://placehold.co/400" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h4 class="card-title">{{related_book.title}}</h4>
+      <h5 class="card-title">{{related_book.author}}</h5>
+      <h5 class="card-title"><span class="badge bg-success">{{related_book.category.all|join:", "}}</span></h5>
+    <p class="card-text">Description: {{related_book.description | truncatewords:12 }}</p>
+      <p class="card-text">price: {{related_book.price}}$</p>
+      <a href="{% url 'bookshop:book_detail' related_book.id %}"  class="btn btn-success">details</a>
+  </div>
+</div>
+{% endfor %}
+
+
+{% endif %}
+
+{% endblock%}
