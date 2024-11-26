@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Book, Category
 from .forms import BookForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -49,7 +50,7 @@ def index(request):
 
 
 
-
+@login_required(login_url='/user/login')
 def detail(request, pk):
     book = Book.objects.get(pk=pk)
 
@@ -58,12 +59,15 @@ def detail(request, pk):
 
 
 def add_book(request):
-    if request.method == 'POST':
-        form = BookForm(request.POST, request.FILES)
-        if form.is_valid():
-            book = form.save()
-        return redirect('bookshop:index')
+    if request.user.has_perm('bookshop.add_book'):
+        if request.method == 'POST':
+            form = BookForm(request.POST, request.FILES)
+            if form.is_valid():
+                book = form.save()
+            return redirect('bookshop:index')
 
+        else:
+            form = BookForm()
+            return render(request, 'add_book.html', {'form': form})
     else:
-        form = BookForm()
-        return render(request, 'add_book.html', {'form': form})
+        return redirect('bookshop:index')
