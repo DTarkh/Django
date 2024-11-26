@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{& block content &}
+
+<div class="container">
+  <h2>my cart</h2>
+
+  {% if cart_items %}
+    <table class="table table-stripped">
+      <th>
+        <tr>
+          <th>Book</th>
+          <th>Quantity</th>
+          <th>price</th>
+          <th>total</th>
+
+        </tr>
+      </th>
+      <tb>
+          {% for item in cart_items %}
+        <tr>
+          <td>{{item.book.title}}</td>
+          <td>
+            <form>
+              {% csrf_token %}
+              <input type="number" value="{{item.quantity}}" min="1" max="{{item.book.stock}}" class="form-control">
+              <button class="btn btn primary" type="submit">Update</button>
+            </form>
+          </td>
+          <td>{{item.book.price}}</td>
+          <td>{{item.total }}</td>
+        </tr>
+
+
+        {% endfor%}
+      </tb>
+
+    </table>
+
+  {% else %}
+    <h2>Cart is Empty</h2>
+  {% endif %}
+
+</div>
+
+{& endblock &}

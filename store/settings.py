@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bookshop',
     'crispy_forms',
     'crispy_bootstrap5',
+    'orders'
 ]
 
 MIDDLEWARE = [
