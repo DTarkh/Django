@@ -9,6 +9,7 @@
     <h4>{{book.author}}</h4>
     <h4>{{book.price}}</h4>
     <p>{{book.description}}</p>
+    <a href="{% url 'orders:add_cart_item' book.id %}"  class="btn btn-success">Add To Cart</a>
 </div>
 
 
@@ -26,6 +27,7 @@
     <p class="card-text">Description: {{related_book.description | truncatewords:12 }}</p>
       <p class="card-text">price: {{related_book.price}}$</p>
       <a href="{% url 'bookshop:book_detail' related_book.id %}"  class="btn btn-success">details</a>
+      <a href="{% url 'orders:add_cart_item' related_book.id %}"  class="btn btn-success">add to cart</a>
   </div>
 </div>
 {% endfor %}
